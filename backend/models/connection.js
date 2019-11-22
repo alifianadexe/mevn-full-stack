@@ -1,8 +1,12 @@
-// check connection
+// connect mongo
 var mongoose = require('mongoose');
-mongoose.connect(process.env.MONGODB_URI  + 'localhost:27017/dbPosts');
-var db = mongoose.connection;
-db.on("error", console.error.bind(console, "connection error"))
-db.once("open", function(callback){
-    console.log("Connection Succeeded")
-});
+module.exports.connect = function(){
+    mongoose.connect('mongodb://localhost/dbPost', { useMongoClient: true });
+    var db = mongoose.connection;
+    db.on('error', console.error.bind(console, 'connection error:'));
+    db.once('open', function() {
+    console.log('We are connected')
+    });
+    return db
+}
+
