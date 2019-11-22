@@ -1,21 +1,21 @@
 <template>
   <div class="posts">
     <h1>Posts</h1>
-    <div v-if="posts.length > 0" class="table-warp">
+    <div v-if="posts.length > 0" class="table-wrap">
       <div>
         <router-link v-bind:to="{name: 'addpost' }">Add Post</router-link>
       </div>
       <table>
         <tr>
-          <th>Title</th>
+          <th width="300">Title</th>
           <th width="550">Description</th>
-          <th width="100" align="center">Action</th>
+          <th width="150" align="center">Action</th>
         </tr>
         <tr v-for="post in posts" :key="post._id">
           <td>{{ post.title }}</td>
           <td>{{ post.description }}</td>
           <td align="center">
-            <router-link v-bind:to="{ name: 'editpost', params: {id: post._id } }">Edit</router-link>
+            <router-link v-bind:to="{ name: 'editpost', params: {id: post._id } }">Edit</router-link> | 
             <a href="#" @click="deletePost(post._id)">Delete</a>
           </td>
         </tr>
@@ -43,7 +43,7 @@ export default {
   methods: {
     async getPosts() {
       const response = await PostsService.fetchPost();
-      this.posts = response.data;
+      this.posts = response.data.posts;
     },
     async deletePost(id) {
       const $this = this;
@@ -73,7 +73,9 @@ export default {
   margin: 0 auto;
   text-align: center;
 }
-table th,
+table th {
+  text-align: center;  
+}
 table tr {
   text-align: left;
 }
